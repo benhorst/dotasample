@@ -7,6 +7,12 @@ class ItemDbsController < ApplicationController
     @item_dbs = ItemDb.all
   end
 
+  # GET /item_dbs/latest
+  # GET /item_dbs/latest.json
+  def latest
+    @item_db = ItemDb.last
+  end
+
   # GET /item_dbs/1
   # GET /item_dbs/1.json
   def show
