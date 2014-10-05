@@ -4,13 +4,13 @@ RSpec.describe "hero_dbs/index", :type => :view do
   before(:each) do
     assign(:hero_dbs, [
       HeroDb.create!(
-        :data => "Data",
-        :patch_version => "Patch Version",
-        :fetch_version => 1
+        :data => File.read("res/hero_db_cache.json"),
+        :patch_version => "Patch Version Alpha",
+        :fetch_version => 6
       ),
       HeroDb.create!(
-        :data => "Data",
-        :patch_version => "Patch Version",
+        :data => File.read("res/hero_db_cache.json"),
+        :patch_version => "Patch Version Beta",
         :fetch_version => 1
       )
     ])
@@ -18,8 +18,7 @@ RSpec.describe "hero_dbs/index", :type => :view do
 
   it "renders a list of hero_dbs" do
     render
-    assert_select "tr>td", :text => "Data".to_s, :count => 2
-    assert_select "tr>td", :text => "Patch Version".to_s, :count => 2
-    assert_select "tr>td", :text => 1.to_s, :count => 2
+    assert_select "tr>td", :text => /Patch Version */, :count => 2
+    assert_select "tr>td", :text => /^\d$/, :count => 2
   end
 end

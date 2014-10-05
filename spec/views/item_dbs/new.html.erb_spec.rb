@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "item_dbs/new", :type => :view do
   before(:each) do
     assign(:item_db, ItemDb.new(
-      :data => "MyString",
+      :data => File.read("res/item_db_cache.json"),
       :patch_version => "MyString",
       :fetch_version => 1
     ))

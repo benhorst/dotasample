@@ -2,7 +2,6 @@ require 'json'
 require 'json_validator'
 
 class HeroDb < ActiveRecord::Base
-  attr_reader :data, :patch_version, :fetch_version
   validates_with JsonParse, fields: [:data]
   validates_each :data, :patch_version do |record, attr, value|
     record.errors.add(attr, "cannot be empty or whitespace") if value.nil? || value.strip == ""

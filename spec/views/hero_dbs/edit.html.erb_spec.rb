@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "hero_dbs/edit", :type => :view do
   before(:each) do
     @hero_db = assign(:hero_db, HeroDb.create!(
-      :data => "MyString",
+      :data => File.read("res/hero_db_cache.json"),
       :patch_version => "MyString",
       :fetch_version => 1
     ))
