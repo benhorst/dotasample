@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @hero_db.data %>
+</p>
+
+<p>
+  <strong>Patch version:</strong>
+  <%= @hero_db.patch_version %>
+</p>
+
+<p>
+  <strong>Fetch version:</strong>
+  <%= @hero_db.fetch_version %>
+</p>
+
+<%= link_to 'Edit', edit_hero_db_path(@hero_db) %> |
+<%= link_to 'Back', hero_dbs_path %>

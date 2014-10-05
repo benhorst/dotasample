@@ -1,0 +1,29 @@
+<h1>Listing hero_dbs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Patch version</th>
+      <th>Fetch version</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hero_dbs.each do |hero_db| %>
+      <tr>
+        <td><%= hero_db.data %></td>
+        <td><%= hero_db.patch_version %></td>
+        <td><%= hero_db.fetch_version %></td>
+        <td><%= link_to 'Show', hero_db %></td>
+        <td><%= link_to 'Edit', edit_hero_db_path(hero_db) %></td>
+        <td><%= link_to 'Destroy', hero_db, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hero db', new_hero_db_path %>

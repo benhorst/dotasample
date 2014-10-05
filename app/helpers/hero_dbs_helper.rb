@@ -1,0 +1,2 @@
+module HeroDbsHelper
+end
