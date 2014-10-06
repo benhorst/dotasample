@@ -13,7 +13,7 @@
   <tbody>
     <% @item_dbs.each do |item_db| %>
       <tr>
-        <td><%= item_db.data %></td>
+        <td><%= item_db.data[0..100] %></td>
         <td><%= item_db.patch_version %></td>
         <td><%= item_db.fetch_version %></td>
         <td><%= link_to 'Show', item_db %></td>

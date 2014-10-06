@@ -46,6 +46,7 @@ class ItemDbsController < ApplicationController
   # POST /item_dbs.json
   def create
     @item_db = ItemDb.new(item_db_params)
+    @item_db.data = ItemDb.get_dota2_items
 
     respond_to do |format|
       if @item_db.save
