@@ -3,11 +3,16 @@
 
 @dotaItems = angular.module('dotaItems', ['ngRoute'])
 
+
 @dotaItems.config(['$routeProvider', ($routeProvider) ->
   $routeProvider.
     when('/:root*/item/:id', {
       templateUrl: '/templates/items/show.html',
-      controller: 'ItemShowCtrl'
+      controller: 'ItemShowCtrl',
+      resolve: {
+        item: ($route, itemService) ->
+          return itemService.get($route.current.params.id)
+      }
     }).
     when('/:root*/showSmall/:id', {
       templateUrl: '/templates/items/showsmall.html',
@@ -15,7 +20,11 @@
     }).
     otherwise({
       templateUrl: '/templates/items/home.html',
-      controller: 'HomeCtrl'
+      controller: 'HomeCtrl',
+      resolve: {
+        items: (itemService) ->
+          return itemService.list()
+      }
     })
 ])
 

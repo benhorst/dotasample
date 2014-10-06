@@ -1,20 +1,4 @@
-
-@dotaItems.controller('HomeCtrl', ['$scope', '$location', '$http', 'itemService', ($scope, $location, $http, itemService) ->
-  itemService.list().then((data) ->
-    $scope.items = data
-    console.log('data-loaded')
-  )
-  $scope.$on('$viewContentLoaded', ->
-    console.log('content-loaded')
-  )
-
-  $scope.viewItem = (id) ->
-    $location.url "/app/items/item/#{id}"
-]).config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
-  $locationProvider.html5Mode(true)
-])
-
-@dotaItems.factory 'itemService', ['$http', '$q', ($http, $q) ->
+@dotaItems.factory('itemService', ['$http', '$q', ($http, $q) ->
   getbyid = (id) ->
     deferred = $q.defer()
     $http.get("/item_dbs/latest_item/#{id}.json").success((response) ->
@@ -28,21 +12,60 @@
       deferred.resolve(response)
     )
     return deferred.promise
-  return { 
+  return {
     get: getbyid,
     list : listall
   }
-]
+])
 
+@dotaItems.controller('HomeCtrl', ($scope, $route, $location, items) ->
+  $scope.items = items
 
-@dotaItems.controller('ItemShowCtrl', ['$scope', '$http', '$routeParams', '$location', 'itemService', ($scope, $http, $routeParams, $location, itemService) ->
-  itemService.get($routeParams.id).then((data) ->
-    $scope.item = data
+  $scope.$on('$viewContentLoaded', ->
+    console.log('content-loaded')
+  )
+  $scope.$on('$routeChangeSuccess', ->
+    console.log('route change success')
+  )
+  $scope.$on('routeChangeError', ->
+    console.log('route change fail')
+  )
+
+  
+  $scope.$watch('items', (newer, older, $scope) ->
+    str = (a) -> 
+      if (a && a.length)
+        return "array(" + a.length + ")"
+      else
+        return a 
+    console.log('items changed: ' + str(older) + ' => ' + str(newer))
   )
 
   $scope.viewItem = (id) ->
-    $location.url "/app/items/item/#{id}"
+    $location.url("/app/items/item/#{id}")
+
+).config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
+  $locationProvider.html5Mode(true)
+])
+
+
+
+@dotaItems.controller('ItemShowCtrl', ['$scope', '$route', '$http', '$location', 'itemService', 'item', ($scope, $route, $http, $location, itemService, item) ->
+  $scope.item = item
   
+  $scope.viewItem = (id) ->
+    $location.url("/app/items/item/#{id}")
+  
+  $scope.$on('$viewContentLoaded', ->
+    console.log('content-loaded')
+  )
+  $scope.$on('$routeChangeSuccess', ->
+    console.log('route change success')
+  )
+  $scope.$on('routeChangeError', ->
+    console.log('route change fail')
+  )
+
 ]).directive 'showsmall', ['$http', '$q', '$compile', '$location', 'itemService', ($http, $q, $compile, $location, itemService) ->
   return {
     restrict: 'E',
