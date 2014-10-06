@@ -1,2 +1,15 @@
-<h1>App#items</h1>
-<p>Find me in app/views/app/items.html.erb</p>
+<% content_for :angular_app do %>
+  "ng-apap=\"dota-items\""
+<% end %>
+
+<% content_for :title do %>
+  Items App
+<% end %>
+
+<% content_for :head do %>
+  <%= javascript_include_tag 'app/items' %>
+<% end %>
+
+<h1>Angular Items Application</h1>
+<div ng-view>
+</div>

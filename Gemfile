@@ -40,3 +40,4 @@ gem 'spring',        group: :development
 
 gem 'mysql2'
 gem 'rspec-rails'
+gem 'angularjs-rails'
