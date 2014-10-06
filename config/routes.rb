@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :hero_dbs
 
+  get ':controller/:action(/:id)'
+
   resources :item_dbs do
     collection do
       get 'latest'
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
 
   scope "/app" do
     get 'items', to: 'app#items'
+    get 'items/*all', to: 'app#items'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
