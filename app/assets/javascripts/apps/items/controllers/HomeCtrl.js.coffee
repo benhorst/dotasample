@@ -1,13 +1,18 @@
 
-@dotaItems.controller 'HomeCtrl', ['$scope', '$location', '$http', 'itemService', ($scope, $location, $http, itemService) ->
-  $scope.items = []
+@dotaItems.controller('HomeCtrl', ['$scope', '$location', '$http', 'itemService', ($scope, $location, $http, itemService) ->
   itemService.list().then((data) ->
     $scope.items = data
+    console.log('data-loaded')
+  )
+  $scope.$on('$viewContentLoaded', ->
+    console.log('content-loaded')
   )
 
   $scope.viewItem = (id) ->
-    $location.url "item/#{id}"
-]
+    $location.url "/app/items/item/#{id}"
+]).config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
+  $locationProvider.html5Mode(true)
+])
 
 @dotaItems.factory 'itemService', ['$http', '$q', ($http, $q) ->
   getbyid = (id) ->
@@ -36,7 +41,7 @@
   )
 
   $scope.viewItem = (id) ->
-    $location.url "item/#{id}"
+    $location.url "/app/items/item/#{id}"
   
 ]).directive 'showsmall', ['$http', '$q', '$compile', '$location', 'itemService', ($http, $q, $compile, $location, itemService) ->
   return {
@@ -48,7 +53,7 @@
         $http.get("/templates/items/showsmall.html")
       ]).then((results) ->
         $scope.viewItem = (id) ->
-          $location.url "item/#{id}"
+          $location.url "/app/items/item/#{id}"
         $scope.displayItem = results[0]
         $element.html(results[1].data)
         $compile($element.contents())($scope)
@@ -63,7 +68,7 @@
   )
   
   $scope.viewItem = (id) ->
-    $location.url "item/#{id}"
+    $location.url "app/items/item/#{id}"
 ]
 
 
