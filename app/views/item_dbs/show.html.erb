@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= "#{@item_db.data[0..100]}..." %>
+</p>
+
+<p>
+  <strong>Patch version:</strong>
+  <%= @item_db.patch_version %>
+</p>
+
+<p>
+  <strong>Fetch version:</strong>
+  <%= @item_db.fetch_version %>
+</p>
+
+<%= link_to 'Edit', edit_item_db_path(@item_db) %> |
+<%= link_to 'Back', item_dbs_path %>

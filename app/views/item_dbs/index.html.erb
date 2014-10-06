@@ -1,0 +1,29 @@
+<h1>Listing item_dbs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Patch version</th>
+      <th>Fetch version</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_dbs.each do |item_db| %>
+      <tr>
+        <td><%= item_db.data %></td>
+        <td><%= item_db.patch_version %></td>
+        <td><%= item_db.fetch_version %></td>
+        <td><%= link_to 'Show', item_db %></td>
+        <td><%= link_to 'Edit', edit_item_db_path(item_db) %></td>
+        <td><%= link_to 'Destroy', item_db, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item db', new_item_db_path %>

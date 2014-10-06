@@ -39,3 +39,5 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'mysql2'
+gem 'rspec-rails'
+gem 'angularjs-rails'
