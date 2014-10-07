@@ -1,5 +1,8 @@
+Search: <input ng-model="query.dname">
+Search Components: <input ng-model="query.components" emptystringundefined>
+
 <ul class="flex compact-ditem-list">
-  <li class="compact-ditem"  ng-click="viewItem(item.id)" ng-repeat="item in items">
+  <li class="compact-ditem"  ng-click="viewItem(item.id)" ng-repeat="item in items | filter:query">
     <div class="center">
       <img src="http://cdn.dota2.com/apps/dota2/images/items/{{item.img}}">
     </div>

@@ -30,4 +30,15 @@
     })
   $locationProvider.html5Mode(true)
 ])
-
+.directive('emptystringundefined', [() ->
+  return {
+    require: 'ngModel',
+    restrict: 'EA',
+    link: ($scope, element, attr, ngModel) ->
+      ngModel.$parsers.push((val) ->
+        if val == ""
+         val = undefined
+        return val
+      )
+  }
+])
