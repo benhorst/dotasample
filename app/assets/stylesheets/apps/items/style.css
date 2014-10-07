@@ -1,0 +1,26 @@
+.flex {
+  display: flex;
+}
+
+.compact-ditem-list {
+ list-style: none;
+}
+
+.flex.compact-ditem-list {
+  flex-wrap: wrap;
+}
+
+.compact-ditem > .center > * {
+  margin: 0 auto;
+  display:block;
+  text-align:center;
+}
+.compact-ditem {
+  border: thin solid black;
+  width: 100px;
+  cursor: pointer;
+}
+
+.ditem-name {
+  word-break: break-all;
+}
