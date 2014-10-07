@@ -1,4 +1,6 @@
-@dotaItems.factory('itemService', ['$http', '$q', ($http, $q) ->
+@dotacontrollers = angular.module('dotacontrollers', [])
+
+@dotacontrollers.factory('itemService', ['$http', '$q', ($http, $q) ->
   getbyid = (id) ->
     deferred = $q.defer()
     $http.get("/item_dbs/latest_item/#{id}.json").success((response) ->
@@ -18,7 +20,7 @@
   }
 ])
 
-@dotaItems.controller('HomeCtrl', ($scope, $route, $location, items) ->
+@dotacontrollers.controller('HomeCtrl', ($scope, $route, $location, items) ->
   $scope.items = items
 
   $scope.$on('$viewContentLoaded', ->
@@ -44,13 +46,10 @@
   $scope.viewItem = (id) ->
     $location.url("/app/items/item/#{id}")
 
-).config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
-  $locationProvider.html5Mode(true)
-])
+)
 
 
-
-@dotaItems.controller('ItemShowCtrl', ['$scope', '$route', '$http', '$location', 'itemService', 'item', ($scope, $route, $http, $location, itemService, item) ->
+@dotacontrollers.controller('ItemShowCtrl', ['$scope', '$route', '$http', '$location', 'itemService', 'item', ($scope, $route, $http, $location, itemService, item) ->
   $scope.item = item
   
   $scope.viewItem = (id) ->
@@ -66,7 +65,9 @@
     console.log('route change fail')
   )
 
-]).directive 'showsmall', ['$http', '$q', '$compile', '$location', 'itemService', ($http, $q, $compile, $location, itemService) ->
+])
+
+@dotacontrollers.directive('showsmall', ['$http', '$q', '$compile', '$location', 'itemService', ($http, $q, $compile, $location, itemService) ->
   return {
     restrict: 'E',
     scope: { id: "=key" },
@@ -82,9 +83,9 @@
         $compile($element.contents())($scope)
       )
   }
-]
+])
 
-@dotaItems.controller 'ItemShowSmallCtrl', ['$scope', '$http', '$routeParams', '$location', ($scope, $http, $routeParams, $location) ->
+@dotacontrollers.controller('ItemShowSmallCtrl', ['$scope', '$http', '$routeParams', '$location', ($scope, $http, $routeParams, $location) ->
   
   itemService.get($routeParams.id).then((data) ->
     $scope.item = data
@@ -92,11 +93,9 @@
   
   $scope.viewItem = (id) ->
     $location.url "app/items/item/#{id}"
-]
+])
 
-
-
-@dotaItems.filter 'displayKeys', ->
+@dotacontrollers.filter 'displayKeys', ->
   (object) ->
     displayNames = ["cost", "lore", "notes"];
     object = object || {}

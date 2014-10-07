@@ -1,10 +1,10 @@
 //= require angular
 //= require angular-route
 
-@dotaItems = angular.module('dotaItems', ['ngRoute'])
+@dotaItems = angular.module('dotaItems', ['ngRoute', 'dotacontrollers'])
 
 
-@dotaItems.config(['$routeProvider', ($routeProvider) ->
+@dotaItems.config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
   $routeProvider.
     when('/:root*/item/:id', {
       templateUrl: '/templates/items/show.html',
@@ -26,5 +26,6 @@
           return itemService.list()
       }
     })
+  $locationProvider.html5Mode(true)
 ])
 
