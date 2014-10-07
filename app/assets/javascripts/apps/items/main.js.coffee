@@ -10,8 +10,9 @@
       templateUrl: '/templates/items/show.html',
       controller: 'ItemShowCtrl',
       resolve: {
-        item: ($route, itemService) ->
+        item: ['$route', 'itemService', ($route, itemService) ->
           return itemService.get($route.current.params.id)
+        ]
       }
     }).
     when('/:root*/showSmall/:id', {
@@ -22,8 +23,9 @@
       templateUrl: '/templates/items/home.html',
       controller: 'HomeCtrl',
       resolve: {
-        items: (itemService) ->
+        items: ['itemService', (itemService) ->
           return itemService.list()
+        ]
       }
     })
   $locationProvider.html5Mode(true)

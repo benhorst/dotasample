@@ -20,7 +20,7 @@
   }
 ])
 
-@dotacontrollers.controller('HomeCtrl', ($scope, $route, $location, items) ->
+@dotacontrollers.controller('HomeCtrl',['$scope', '$route', '$location', 'items', ($scope, $route, $location, items) ->
   $scope.items = items
 
   $scope.$on('$viewContentLoaded', ->
@@ -46,7 +46,7 @@
   $scope.viewItem = (id) ->
     $location.url("/app/items/item/#{id}")
 
-)
+])
 
 
 @dotacontrollers.controller('ItemShowCtrl', ['$scope', '$route', '$http', '$location', 'itemService', 'item', ($scope, $route, $http, $location, itemService, item) ->
@@ -106,4 +106,3 @@
         return acc
       , {})
 
-    
