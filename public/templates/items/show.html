@@ -1,0 +1,15 @@
+<a href="/app/items/">index</a>
+
+<h3>{{item.dname}}</h3>
+
+<img src="http://cdn.dota2.com/apps/dota2/images/items/{{item.img}}">
+
+<ul ng-repeat="(key, value) in item | displayKeys">
+  <li><span>{{key}}</span> : <span>{{value}}</span></li>
+</ul>
+
+<h4>{{item.components && item.components.length ? "Components" : "No Components"}}</h4>
+<div style="display:inline-block; margin: 0 1em;" ng-repeat="key in item.components track by $index">
+  <showsmall key="key"></showsmall>
+</div>
+

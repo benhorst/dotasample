@@ -1,5 +1,6 @@
 require 'json'
 require 'json_validator'
+require 'net/http'
 
 class ItemDb < ActiveRecord::Base
 
@@ -21,5 +22,11 @@ class ItemDb < ActiveRecord::Base
   def data_hash
     @hash = JSON.parse(data)["itemdata"].to_hash if @hash.nil?
     @hash
+  end
+
+  def self.get_dota2_items
+    res = Net::HTTP.get('www.dota2.com', '/jsfeed/heropediadata?feeds=itemdata&v=2428987nfobKeI_Qh4k&l=english&callback=HeropediaDFReceive')
+    match = res.match /^\w*?\((.*)\);$/
+    match[1]
   end
 end

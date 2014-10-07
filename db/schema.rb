@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141005204146) do
+ActiveRecord::Schema.define(version: 20141006164921) do
 
   create_table "hero_dbs", force: true do |t|
-    t.string   "data"
+    t.text     "data",          limit: 16777216
     t.string   "patch_version"
     t.integer  "fetch_version"
     t.datetime "created_at"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141005204146) do
   end
 
   create_table "item_dbs", force: true do |t|
-    t.string   "data"
+    t.text     "data",          limit: 16777216
     t.string   "patch_version"
     t.integer  "fetch_version"
     t.datetime "created_at"

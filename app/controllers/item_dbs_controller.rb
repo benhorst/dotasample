@@ -11,6 +11,21 @@ class ItemDbsController < ApplicationController
   # GET /item_dbs/latest.json
   def latest
     @item_db = ItemDb.last
+
+    items = JSON.parse(@item_db.data).to_hash["itemdata"]
+    @itemlist = items.keys.map { |k| items[k].merge({:name=>k}) }
+  end
+
+  def latest_item
+    @item_db = ItemDb.last
+
+    items = JSON.parse(@item_db.data).to_hash["itemdata"]
+    if params[:id].match(/\d/).nil?
+      @item = items[params[:id]].merge({:name=>params[:id]})
+    else
+      @itemlist = items.keys.map { |k| items[k].merge({:name=>k}) }
+      @item = @itemlist.select { |i| i["id"].to_i == params[:id].to_i }[0]
+    end
   end
 
   # GET /item_dbs/1
@@ -31,6 +46,7 @@ class ItemDbsController < ApplicationController
   # POST /item_dbs.json
   def create
     @item_db = ItemDb.new(item_db_params)
+    @item_db.data = ItemDb.get_dota2_items
 
     respond_to do |format|
       if @item_db.save
