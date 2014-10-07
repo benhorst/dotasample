@@ -17,8 +17,10 @@
 }
 .compact-ditem {
   border: thin solid black;
-  width: 100px;
   cursor: pointer;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
 }
 
 .ditem-name {
