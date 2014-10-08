@@ -20,28 +20,39 @@
   }
 ])
 
+@dotacontrollers.filter('recurseFilter', ['$filter', ($filter)->
+  (list, query, prop, childProp) ->
+    checker = (el, index, arr) ->
+      return false if !angular.isDefined(el)
+      !angular.isDefined(query) or
+      $filter('lowercase')(el[prop]).indexOf(query) > -1 or 
+      (el[childProp]? and el[childProp].map((ch) ->
+        checker(ch, query, prop, childProp)).reduce(((a, c) -> a or c), false))
+     list.filter(checker)
+])
+
 @dotacontrollers.controller('HomeCtrl',['$scope', '$route', '$location', 'items', ($scope, $route, $location, items) ->
   $scope.items = items
 
-  $scope.$on('$viewContentLoaded', ->
-    console.log('content-loaded')
-  )
-  $scope.$on('$routeChangeSuccess', ->
-    console.log('route change success')
-  )
-  $scope.$on('routeChangeError', ->
-    console.log('route change fail')
+  itemMap = items.reduce((acc, curr) ->
+    acc[curr.name] = curr
+    acc[curr.id] = curr
+    acc
+  , {})
+
+  items.map((i) ->
+    return null if !i.components
+    i.components = i.components.map((cId) ->
+      return itemMap[cId];
+    )
   )
 
+  $scope.componentSearch = (actual, expected) ->
+    return false if !actual.dname
+    (actual.dname.indexOf(expected) > -1) or actual.components && actual.components.map((comp) ->
+        $scope.componentSearch(comp, expected)
+      ).reduce(((acc, curr) -> acc or curr), false)
   
-  $scope.$watch('items', (newer, older, $scope) ->
-    str = (a) -> 
-      if (a && a.length)
-        return "array(" + a.length + ")"
-      else
-        return a 
-    console.log('items changed: ' + str(older) + ' => ' + str(newer))
-  )
 
   $scope.viewItem = (id) ->
     $location.url("/app/items/item/#{id}")

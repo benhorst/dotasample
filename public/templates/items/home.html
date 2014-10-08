@@ -1,8 +1,7 @@
-Search: <input ng-model="query.dname">
-Search Components: <input ng-model="query.components" emptystringundefined>
-
+<input ng-model="compsearch" placeholder="search name/components" emptystringundefined>
+<br>
 <ul class="flex compact-ditem-list">
-  <li class="compact-ditem"  ng-click="viewItem(item.id)" ng-repeat="item in items | filter:query">
+  <li class="compact-ditem"  ng-click="viewItem(item.id)" ng-repeat="item in items | recurseFilter:compsearch:'dname':'components'">
     <div class="center">
       <img src="http://cdn.dota2.com/apps/dota2/images/items/{{item.img}}">
     </div>
